@@ -53,7 +53,7 @@ const Navbar = () => {
                 <a
                   href={l.href}
                   onClick={() => setIsOpen(false)}
-                  className="text-sm font-medium text-muted-foreground hover:text-primary transition-colors"
+                  className="text-sm font-medium text-primary-foreground/80 hover:text-primary-foreground transition-colors"
                 >
                   {l.label}
                 </a>
