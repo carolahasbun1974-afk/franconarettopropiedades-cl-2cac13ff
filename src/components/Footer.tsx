@@ -8,9 +8,7 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
-            <h3 className="font-serif text-2xl font-bold mb-4">
-              Campo<span className="text-accent">Real</span>
-            </h3>
+            <img src={logo} alt="Franco Naretto Propiedades Agrícolas" className="h-14 mb-2 brightness-0 invert" />
             <p className="text-primary-foreground/75 font-sans text-sm leading-relaxed">
               Corredora de propiedades agrícolas. Conectamos a quienes buscan invertir en el campo con las mejores oportunidades del mercado.
             </p>
