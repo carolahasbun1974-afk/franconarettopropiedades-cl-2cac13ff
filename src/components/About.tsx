@@ -28,7 +28,7 @@ const About = () => {
             </div>
             <div>
               <p className="text-3xl font-bold text-primary">50K+</p>
-              <p className="text-sm text-muted-foreground font-sans mt-1">Hectáreas transadas</p>
+              <p className="text-sm text-muted-foreground font-sans mt-1">Presencia desde la Reg</p>
             </div>
           </div>
         </div>
