@@ -36,7 +36,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile toggle */}
-      <div className="md:hidden flex justify-center pb-3">
+      <div className="md:hidden bg-primary-dark flex justify-center py-3">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="text-primary-foreground"
