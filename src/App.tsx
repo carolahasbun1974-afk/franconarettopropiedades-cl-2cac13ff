@@ -19,7 +19,9 @@ const App = () => (
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<Index />} />
-          {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}
+          <Route path="/auth" element={<Auth />} />
+          <Route path="/admin" element={<Admin />} />
+          <Route path="/propiedad/:id" element={<PropertyDetail />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
