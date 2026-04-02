@@ -8,7 +8,9 @@ const Footer = () => {
       <div className="container mx-auto px-4">
         <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
           <div>
-            <img src={logo} alt="Franco Naretto Propiedades Agrícolas" className="h-14 mb-2 brightness-0 invert" />
+            <div className="inline-flex mb-4 rounded-md bg-background px-3 py-2 shadow-sm">
+              <img src={logo} alt="Franco Naretto Propiedades Agrícolas" className="h-14 w-auto object-contain" />
+            </div>
             <p className="text-primary-foreground/75 font-sans text-sm leading-relaxed">
               Corredora de propiedades agrícolas. Conectamos a quienes buscan invertir en el campo con las mejores oportunidades del mercado.
             </p>
