@@ -14,16 +14,16 @@ const Navbar = () => {
   ];
 
   return (
-    <nav className="fixed top-0 left-0 right-0 z-50 bg-primary">
+    <nav className="fixed top-0 left-0 right-0 z-50">
       {/* Logo area */}
-      <div className="flex justify-center py-6">
+      <div className="bg-primary flex justify-center py-6">
         <a href="/#inicio" className="inline-block bg-background rounded-sm px-6 py-4">
           <img src={logo} alt="Franco Naretto Propiedades Agrícolas" className="h-20" />
         </a>
       </div>
 
       {/* Desktop links */}
-      <div className="hidden md:flex justify-center gap-10 pb-4">
+      <div className="hidden md:flex justify-center gap-10 pb-4 pt-4 bg-primary-dark">
         {links.map((l) => (
           <a
             key={l.href}
@@ -36,7 +36,7 @@ const Navbar = () => {
       </div>
 
       {/* Mobile toggle */}
-      <div className="md:hidden flex justify-center pb-3">
+      <div className="md:hidden bg-primary-dark flex justify-center py-3">
         <button
           onClick={() => setIsOpen(!isOpen)}
           className="text-primary-foreground"
