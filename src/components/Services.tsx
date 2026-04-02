@@ -4,7 +4,7 @@ const services = [
   {
     icon: Search,
     title: "Búsqueda Especializada",
-    description: "Encontramos la propiedad agrícola ideal según tus necesidades productivas y de inversión.",
+    description: "Encontramos la propiedad agrícola, terreno urbano o parcelación ideal según tus necesidades productivas y de inversión.",
   },
   {
     icon: TrendingUp,
