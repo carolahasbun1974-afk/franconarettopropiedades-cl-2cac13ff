@@ -13,9 +13,10 @@ const About = () => {
             y cada oportunidad que el campo tiene para ofrecer.
           </p>
           <p className="text-muted-foreground font-sans leading-relaxed">
-            Trabajamos con viñedos, frutales, cultivos extensivos, ganadería y proyectos 
-            forestales, conectando a propietarios e inversionistas con transparencia, 
-            profesionalismo y un profundo conocimiento del mundo agrícola.
+            Trabajamos con viñedos, frutales, cultivos extensivos, ganadería, proyectos 
+            forestales, terrenos urbanos y parcelaciones desde 5.000 m², conectando a 
+            propietarios e inversionistas con transparencia, profesionalismo y un profundo 
+            conocimiento del mundo agrícola e inmobiliario.
           </p>
           <div className="grid grid-cols-3 gap-8 mt-12">
             <div>
