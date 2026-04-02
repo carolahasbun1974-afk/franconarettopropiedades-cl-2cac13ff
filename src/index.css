@@ -44,7 +44,7 @@
     --sidebar-accent-foreground: 30 10% 15%;
     --sidebar-border: 35 20% 85%;
     --sidebar-ring: 128 52% 28%;
-    --primary-dark: 110 30% 15%;
+    --primary-dark: 110 30% 22%;
 
     --hero-overlay: linear-gradient(to bottom, hsla(30, 10%, 10%, 0.25), hsla(30, 10%, 10%, 0.55));
     --shadow-card: 0 4px 20px -4px hsla(30, 10%, 15%, 0.08);
