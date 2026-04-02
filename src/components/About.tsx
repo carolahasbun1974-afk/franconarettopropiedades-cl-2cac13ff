@@ -19,8 +19,8 @@ const About = () => {
           </p>
           <div className="grid grid-cols-3 gap-8 mt-12">
             <div>
-              <p className="text-3xl font-bold text-primary">500+</p>
-              <p className="text-sm text-muted-foreground font-sans mt-1">Propiedades vendidas</p>
+              <p className="text-3xl font-bold text-primary">100%</p>
+              <p className="text-sm text-muted-foreground font-sans mt-1">Acompañamiento personalizado en cada operación.</p>
             </div>
             <div>
               <p className="text-3xl font-bold text-primary">15+</p>
