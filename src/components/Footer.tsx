@@ -20,7 +20,7 @@ const Footer = () => {
                 <Phone size={16} /> +56 9 1234 5678
               </li>
               <li className="flex items-center gap-2">
-                <Mail size={16} /> info@camporeal.cl
+                <Mail size={16} /> contacto@franconaretto.cl
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} /> Av. Libertador 1250, Santiago
