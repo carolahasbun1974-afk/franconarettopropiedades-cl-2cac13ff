@@ -13,11 +13,11 @@ const Hero = () => {
       />
       <div className="absolute inset-0 hero-overlay" />
       <div className="relative z-10 container mx-auto text-center px-4">
-        <h1 className="text-3xl md:text-5xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up font-sans tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)]">
-          Especialistas en Propiedades Agrícolas
+        <h1 className="text-3xl lg:text-6xl font-bold text-primary-foreground mb-6 animate-fade-in-up font-sans tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] md:text-5xl">
+          Propiedades agrícolas con visión de inversión
         </h1>
         <p className="text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto mb-10 font-sans opacity-0 animate-fade-in-up drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)]" style={{ animationDelay: "0.2s" }}>
-          Conectamos inversionistas con las mejores tierras productivas, terrenos urbanos y parcelaciones del país.
+          Compra, venta y arriendo de campos y parcelas en Chile
         </p>
         <div className="flex flex-col sm:flex-row gap-4 justify-center opacity-0 animate-fade-in-up" style={{ animationDelay: "0.4s" }}>
           <Button size="lg" asChild className="bg-primary text-primary-foreground hover:bg-primary/90 text-base px-8 py-6">
