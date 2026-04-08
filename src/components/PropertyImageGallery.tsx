@@ -28,7 +28,7 @@ const PropertyImageGallery = ({ images, fallbackUrl }: PropertyImageGalleryProps
         <img
           src={sorted[current].image_url}
           alt={`Foto ${current + 1}`}
-          className="w-full h-full object-cover"
+          className="w-full h-full object-contain bg-muted"
         />
         {sorted.length > 1 && (
           <>
