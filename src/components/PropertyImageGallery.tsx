@@ -24,11 +24,11 @@ const PropertyImageGallery = ({ images, fallbackUrl }: PropertyImageGalleryProps
 
   return (
     <div className="mb-8 space-y-3">
-      <div className="relative rounded-lg overflow-hidden bg-muted flex items-center justify-center" style={{ minHeight: '300px', maxHeight: '70vh' }}>
+      <div className="relative rounded-lg overflow-hidden bg-muted">
         <img
           src={sorted[current].image_url}
           alt={`Foto ${current + 1}`}
-          className="max-w-full max-h-[70vh] object-contain"
+          className="w-full h-auto block"
         />
         {sorted.length > 1 && (
           <>
