@@ -235,7 +235,16 @@ const Admin = () => {
               </div>
               <div className="space-y-2">
                 <Label>Tipo de Propiedad</Label>
-                <Input value={form.property_type} onChange={(e) => setForm({ ...form, property_type: e.target.value })} required />
+                <Select value={form.property_type} onValueChange={(v) => setForm({ ...form, property_type: v })}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Selecciona una categoría" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {PROPERTY_CATEGORIES.map((cat) => (
+                      <SelectItem key={cat} value={cat}>{cat}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div className="space-y-2">
                 <Label>Agregar Imágenes</Label>
