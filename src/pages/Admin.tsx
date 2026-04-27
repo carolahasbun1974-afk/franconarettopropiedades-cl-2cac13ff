@@ -33,7 +33,7 @@ const Admin = () => {
     price: "",
     hectares: "",
     location: "",
-    property_type: "Agrícola",
+    property_type: "Fundos y parcelas agrícolas",
   });
 
   useEffect(() => {
@@ -179,7 +179,7 @@ const Admin = () => {
     setImageFiles([]);
     setExistingImages([]);
     setImagesToDelete([]);
-    setForm({ title: "", description: "", price: "", hectares: "", location: "", property_type: "Agrícola" });
+    setForm({ title: "", description: "", price: "", hectares: "", location: "", property_type: "Fundos y parcelas agrícolas" });
   };
 
   const handleLogout = async () => {
