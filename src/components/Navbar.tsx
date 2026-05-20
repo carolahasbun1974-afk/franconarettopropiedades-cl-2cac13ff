@@ -72,6 +72,15 @@ const Navbar = () => {
             </a>
           ),
         )}
+        <a
+          href="https://instagram.com/franconaretto.propiedades"
+          target="_blank"
+          rel="noopener noreferrer"
+          aria-label="Instagram"
+          className="text-primary-foreground/85 hover:text-primary-foreground transition-colors"
+        >
+          <Instagram size={16} />
+        </a>
       </div>
 
       {/* Mobile toggle */}
