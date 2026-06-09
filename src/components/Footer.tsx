@@ -45,7 +45,7 @@ const Footer = () => {
           <div>
             <h4 className="font-serif text-lg font-semibold mb-4">¿Tienes un campo para vender?</h4>
             <p className="text-primary-foreground/75 font-sans text-sm mb-4">
-              janos tus datos y te contactaremos a la brevedad.
+              Déjanos tus datos y te contactaremos a la brevedad.
             </p>
             <Button variant="secondary" className="font-sans">
               Publicar mi propiedad
