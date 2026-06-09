@@ -25,7 +25,7 @@ const Footer = () => {
                 <Mail size={16} /> contacto@franconaretto.cl
               </li>
               <li className="flex items-center gap-2">
-                <MapPin size={16} /> Av. Libertador 1250, Santiago
+                <MapPin size={16} /> Rengo, VI Región
               </li>
               <li>
                 <a
