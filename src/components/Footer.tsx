@@ -19,7 +19,7 @@ const Footer = () => {
             <h4 className="font-serif text-lg font-semibold mb-4">Contacto</h4>
             <ul className="space-y-3 font-sans text-sm text-primary-foreground/75">
               <li className="flex items-center gap-2">
-                <Phone size={16} /> +56 9 1234 5678
+                <Phone size={16} /> +56 9 98859247
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} /> contacto@franconaretto.cl
