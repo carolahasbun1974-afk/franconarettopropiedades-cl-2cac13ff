@@ -23,7 +23,9 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <Mail size={16} className="flex-shrink-0" />
-                <span className="break-all">contacto@franconarettopropiedades.cl</span>
+                <a href="mailto:contacto@franconarettopropiedades.cl" className="text-xs sm:text-sm whitespace-nowrap hover:text-primary-foreground transition-colors">
+                  contacto@franconarettopropiedades.cl
+                </a>
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} /> Rengo, VI Región
