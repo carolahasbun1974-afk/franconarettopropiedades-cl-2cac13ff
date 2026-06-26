@@ -37,6 +37,7 @@ const SellProperty = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(initial);
+  const [submitted, setSubmitted] = useState(false);
 
   const update = (k: keyof typeof initial, v: string) =>
     setForm((p) => ({ ...p, [k]: v }));
