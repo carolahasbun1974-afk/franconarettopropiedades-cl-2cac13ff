@@ -30,7 +30,7 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} /> Rengo, VI Región
-              </li>
+            </ul>
           </div>
           <div>
             <h4 className="font-serif text-lg font-semibold mb-4">¿Tienes un campo para vender?</h4>
