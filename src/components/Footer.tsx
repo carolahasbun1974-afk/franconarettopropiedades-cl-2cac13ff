@@ -1,4 +1,5 @@
 import { Mail, Phone, MapPin, Instagram } from "lucide-react";
+import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpeg";
 
@@ -47,8 +48,8 @@ const Footer = () => {
             <p className="text-primary-foreground/75 font-sans text-sm mb-4">
               Déjanos tus datos y te contactaremos a la brevedad.
             </p>
-            <Button variant="secondary" className="font-sans">
-              Publicar mi propiedad
+            <Button asChild variant="secondary" className="font-sans">
+              <Link to="/vender">Publicar mi propiedad</Link>
             </Button>
           </div>
         </div>

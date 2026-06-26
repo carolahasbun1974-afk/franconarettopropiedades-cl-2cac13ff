@@ -9,6 +9,7 @@ import Auth from "./pages/Auth.tsx";
 import Admin from "./pages/Admin.tsx";
 import PropertyDetail from "./pages/PropertyDetail.tsx";
 import Unsubscribe from "./pages/Unsubscribe.tsx";
+import SellProperty from "./pages/SellProperty.tsx";
 
 const queryClient = new QueryClient();
 
@@ -24,6 +25,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/propiedad/:id" element={<PropertyDetail />} />
           <Route path="/unsubscribe" element={<Unsubscribe />} />
+          <Route path="/vender" element={<SellProperty />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
