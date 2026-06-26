@@ -257,6 +257,7 @@ const SellProperty = () => {
               </Button>
             </form>
           </div>
+          )}
         </div>
       </main>
       <Footer />
