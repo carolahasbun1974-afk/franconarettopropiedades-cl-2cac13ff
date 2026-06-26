@@ -25,6 +25,7 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/propiedad/:id" element={<PropertyDetail />} />
           <Route path="/unsubscribe" element={<Unsubscribe />} />
+          <Route path="/vender" element={<SellProperty />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
