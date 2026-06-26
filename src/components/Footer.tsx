@@ -1,4 +1,4 @@
-import { Mail, Phone, MapPin, Instagram } from "lucide-react";
+import { Mail, Phone, MapPin } from "lucide-react";
 import { Link } from "react-router-dom";
 import { Button } from "@/components/ui/button";
 import logo from "@/assets/logo.jpeg";
@@ -30,16 +30,6 @@ const Footer = () => {
               </li>
               <li className="flex items-center gap-2">
                 <MapPin size={16} /> Rengo, VI Región
-              </li>
-              <li>
-                <a
-                  href="https://instagram.com/franconaretto.propiedades"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 hover:text-primary-foreground transition-colors"
-                >
-                  <Instagram size={16} /> @franconaretto.propiedades
-                </a>
               </li>
             </ul>
           </div>

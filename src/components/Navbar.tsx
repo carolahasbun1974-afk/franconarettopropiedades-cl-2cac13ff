@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { Menu, X, ChevronDown, Instagram } from "lucide-react";
+import { Menu, X, ChevronDown } from "lucide-react";
 import logo from "@/assets/logo.jpeg";
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
 
@@ -72,15 +72,6 @@ const Navbar = () => {
             </a>
           ),
         )}
-        <a
-          href="https://instagram.com/franconaretto.propiedades"
-          target="_blank"
-          rel="noopener noreferrer"
-          aria-label="Instagram"
-          className="text-primary-foreground/85 hover:text-primary-foreground transition-colors"
-        >
-          <Instagram size={16} />
-        </a>
       </div>
 
       {/* Mobile toggle */}
