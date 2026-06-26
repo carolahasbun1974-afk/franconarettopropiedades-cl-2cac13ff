@@ -16,7 +16,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
-import { ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Send, CheckCircle2 } from "lucide-react";
 
 const initial = {
   name: "",
