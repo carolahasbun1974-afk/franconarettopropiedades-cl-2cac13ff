@@ -48,8 +48,8 @@ const Footer = () => {
             <p className="text-primary-foreground/75 font-sans text-sm mb-4">
               Déjanos tus datos y te contactaremos a la brevedad.
             </p>
-            <Button variant="secondary" className="font-sans">
-              Publicar mi propiedad
+            <Button asChild variant="secondary" className="font-sans">
+              <Link to="/vender">Publicar mi propiedad</Link>
             </Button>
           </div>
         </div>
