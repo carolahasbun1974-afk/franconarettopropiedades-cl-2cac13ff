@@ -16,7 +16,7 @@ import {
 import { useToast } from "@/hooks/use-toast";
 import { supabase } from "@/integrations/supabase/client";
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
-import { ArrowLeft, Send } from "lucide-react";
+import { ArrowLeft, Send, CheckCircle2 } from "lucide-react";
 
 const initial = {
   name: "",
@@ -37,6 +37,7 @@ const SellProperty = () => {
   const { toast } = useToast();
   const [loading, setLoading] = useState(false);
   const [form, setForm] = useState(initial);
+  const [submitted, setSubmitted] = useState(false);
 
   const update = (k: keyof typeof initial, v: string) =>
     setForm((p) => ({ ...p, [k]: v }));
@@ -58,6 +59,8 @@ const SellProperty = () => {
         description: "Te contactaremos a la brevedad para coordinar la publicación.",
       });
       setForm(initial);
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
     } catch (err) {
       console.error(err);
       toast({
@@ -82,6 +85,28 @@ const SellProperty = () => {
           >
             <ArrowLeft className="h-4 w-4" /> Volver al inicio
           </Link>
+          {submitted ? (
+            <div className="bg-background rounded-lg shadow-sm p-10 md:p-14 text-center">
+              <div className="inline-flex items-center justify-center w-16 h-16 rounded-full bg-primary/10 mb-6">
+                <CheckCircle2 className="h-9 w-9 text-primary" />
+              </div>
+              <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-4">
+                ¡Solicitud recibida!
+              </h1>
+              <p className="text-muted-foreground max-w-md mx-auto mb-8">
+                Gracias por confiar en nosotros. Hemos recibido los datos de tu propiedad
+                y nuestro equipo te contactará a la brevedad para coordinar los siguientes pasos.
+              </p>
+              <div className="flex flex-col sm:flex-row gap-3 justify-center">
+                <Button asChild variant="outline">
+                  <Link to="/">Volver al inicio</Link>
+                </Button>
+                <Button onClick={() => setSubmitted(false)}>
+                  Enviar otra propiedad
+                </Button>
+              </div>
+            </div>
+          ) : (
           <div className="bg-background rounded-lg shadow-sm p-8 md:p-10">
             <h1 className="font-serif text-3xl md:text-4xl font-bold text-foreground mb-3">
               Publica tu propiedad
@@ -90,6 +115,7 @@ const SellProperty = () => {
               Completa los datos de tu campo o terreno. Nuestro equipo te
               contactará para coordinar la publicación y visita.
             </p>
+
 
             <form onSubmit={handleSubmit} className="space-y-6">
               <section className="space-y-4">
@@ -231,6 +257,7 @@ const SellProperty = () => {
               </Button>
             </form>
           </div>
+          )}
         </div>
       </main>
       <Footer />
