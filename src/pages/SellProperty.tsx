@@ -14,9 +14,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
 import { ArrowLeft, Send, CheckCircle2 } from "lucide-react";
+
+const WEB3FORMS_ACCESS_KEY = "dec0e1bf-f69f-41ac-b665-b23192b0d26f";
 
 const initial = {
   name: "",
