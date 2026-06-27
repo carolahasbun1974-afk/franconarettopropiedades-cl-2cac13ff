@@ -55,7 +55,7 @@ const Admin = () => {
   }, [userId]);
 
   const fetchProperties = async () => {
-    const { data: props } = await supabase.from("properties").select("*").order("created_at", { ascending: false });
+    const { data: props } = await supabase.from("properties").select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at").order("created_at", { ascending: false });
     if (!props) return;
     setProperties(props);
     const { data: imgs } = await supabase.from("property_images").select("*").order("position");
