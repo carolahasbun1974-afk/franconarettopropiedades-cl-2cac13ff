@@ -9,7 +9,7 @@ const Navbar = () => {
   const [mobilePropsOpen, setMobilePropsOpen] = useState(false);
 
   const links = [
-    { label: "Inicio", href: "/#inicio" },
+    { label: "Inicio", href: "/" },
     { label: "Propiedades", href: "/#propiedades", hasDropdown: true },
     { label: "Servicios", href: "/#servicios" },
     { label: "Nosotros", href: "/#nosotros" },
@@ -23,7 +23,7 @@ const Navbar = () => {
     <nav className="fixed top-0 left-0 right-0 z-50">
       {/* Logo area */}
       <div className="bg-primary flex justify-center py-6">
-        <a href="/#inicio" className="inline-block bg-background rounded-sm px-6 py-4">
+        <a href="/" className="inline-block bg-background rounded-sm px-6 py-4">
           <img src={logo} alt="Franco Naretto Propiedades Agrícolas" className="h-20" />
         </a>
       </div>

@@ -1,3 +1,4 @@
+import { useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import FeaturedProperties from "@/components/FeaturedProperties";
@@ -7,10 +8,16 @@ import ContactForm from "@/components/ContactForm";
 import Footer from "@/components/Footer";
 
 const Index = () => {
+  const location = useLocation();
+  const isPropertiesView =
+    location.hash === "#propiedades" ||
+    new URLSearchParams(location.search).has("cat");
+
   return (
     <div className="min-h-screen">
       <Navbar />
-      <Hero />
+      {!isPropertiesView && <Hero />}
+      {isPropertiesView && <div className="pt-40" />}
       <FeaturedProperties />
       <Services />
       <About />
