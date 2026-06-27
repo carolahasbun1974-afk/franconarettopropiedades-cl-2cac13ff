@@ -4,7 +4,10 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, User, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+
+// 👇 REEMPLAZA esto por tu Access Key de https://web3forms.com
+// (Es seguro tenerla en el código del frontend — Web3Forms está diseñado así.)
+const WEB3FORMS_ACCESS_KEY = "TU_ACCESS_KEY_AQUI";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -19,26 +22,42 @@ const ContactForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { error } = await supabase.functions.invoke("send-transactional-email", {
-        body: {
-          templateName: "contact-notification",
-          idempotencyKey: `contact-${Date.now()}-${form.email}`,
-          templateData: {
-            name: form.name,
-            email: form.email,
-            phone: form.phone,
-            message: form.message,
-          },
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
         },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `Nuevo contacto desde la web — ${form.name}`,
+          from_name: "Franco Naretto Propiedades",
+          name: form.name,
+          email: form.email,
+          phone: form.phone,
+          message: form.message,
+          // Web3Forms enviará el correo a la casilla con la que creaste la Access Key
+          // (contacto@franconarettopropiedades.cl)
+        }),
       });
-      if (error) throw error;
-      toast({ title: "Mensaje enviado", description: "Nos pondremos en contacto contigo a la brevedad." });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.success) {
+        throw new Error(data.message || "Error al enviar el formulario");
+      }
+
+      toast({
+        title: "Mensaje enviado",
+        description: "Nos pondremos en contacto contigo a la brevedad.",
+      });
       setForm({ name: "", email: "", phone: "", message: "" });
     } catch (err) {
       console.error(err);
       toast({
         title: "Error al enviar",
-        description: "Intenta nuevamente o escríbenos directamente a contacto@franconarettopropiedades.cl",
+        description:
+          "Intenta nuevamente o escríbenos directamente a contacto@franconarettopropiedades.cl",
         variant: "destructive",
       });
     } finally {
