@@ -5,7 +5,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, User, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
 
-const WEB3FORMS_ACCESS_KEY = "TU_ACCESS_KEY_AQUI";
+const WEB3FORMS_ACCESS_KEY = "dec0e1bf-f69f-41ac-b665-b23192b0d26f";
 
 const ContactForm = () => {
   const { toast } = useToast();
