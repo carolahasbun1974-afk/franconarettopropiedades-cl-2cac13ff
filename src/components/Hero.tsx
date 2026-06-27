@@ -1,7 +1,34 @@
+import { useLocation } from "react-router-dom";
 import heroImage from "@/assets/hero-farm.jpg";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
+  const location = useLocation();
+  const showCompact =
+    location.hash === "#propiedades" ||
+    new URLSearchParams(location.search).get("cat") !== null;
+
+  if (showCompact) {
+    return (
+      <section
+        id="inicio"
+        className="relative mt-52 min-h-[240px] flex items-center justify-center bg-primary py-12"
+      >
+        <div className="relative z-10 container mx-auto text-center px-4">
+          <h1 className="text-3xl lg:text-6xl font-bold text-primary-foreground mb-4 animate-fade-in-up font-sans tracking-tight drop-shadow-[0_2px_8px_rgba(0,0,0,0.5)] md:text-5xl">
+            Propiedades agrícolas con visión de inversión
+          </h1>
+          <p
+            className="text-lg md:text-xl text-primary-foreground/90 max-w-2xl mx-auto font-sans opacity-0 animate-fade-in-up drop-shadow-[0_1px_4px_rgba(0,0,0,0.4)]"
+            style={{ animationDelay: "0.2s" }}
+          >
+            Compra, venta y arriendo de campos y parcelas en Chile
+          </p>
+        </div>
+      </section>
+    );
+  }
+
   return (
     <section id="inicio" className="relative mt-52 min-h-[calc(100vh-13rem)] flex items-center justify-center pt-12 pb-16">
       <img
