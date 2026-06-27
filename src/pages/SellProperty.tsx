@@ -14,9 +14,10 @@ import {
   SelectValue,
 } from "@/components/ui/select";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
 import { ArrowLeft, Send, CheckCircle2 } from "lucide-react";
+
+const WEB3FORMS_ACCESS_KEY = "dec0e1bf-f69f-41ac-b665-b23192b0d26f";
 
 const initial = {
   name: "",
@@ -46,14 +47,30 @@ const SellProperty = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { error } = await supabase.functions.invoke("send-transactional-email", {
-        body: {
-          templateName: "sell-property-notification",
-          idempotencyKey: `sell-${Date.now()}-${form.email}`,
-          templateData: form,
-        },
+      const payload = {
+        access_key: WEB3FORMS_ACCESS_KEY,
+        subject: `Nueva propiedad para publicar: ${form.propertyType || "sin tipo"} en ${form.location || "sin ubicación"}`,
+        from_name: "Formulario Publicar Propiedad",
+        name: form.name,
+        email: form.email,
+        phone: form.phone,
+        tipo_propiedad: form.propertyType,
+        ubicacion: form.location,
+        region: form.region,
+        hectareas: form.hectares,
+        precio: form.price,
+        derechos_agua: form.hasWater,
+        electricidad: form.hasElectricity,
+        acceso: form.hasAccess,
+        descripcion: form.description,
+      };
+      const res = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify(payload),
       });
-      if (error) throw error;
+      const data = await res.json();
+      if (!data.success) throw new Error(data.message || "Error");
       toast({
         title: "Solicitud enviada",
         description: "Te contactaremos a la brevedad para coordinar la publicación.",
