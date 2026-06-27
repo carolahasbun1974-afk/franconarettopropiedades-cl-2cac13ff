@@ -48,9 +48,12 @@ const Footer = () => {
             <p className="text-primary-foreground/75 font-sans text-sm mb-4">
               Déjanos tus datos y te contactaremos a la brevedad.
             </p>
-            <Button asChild variant="secondary" className="font-sans">
-              <Link to="/vender">Publicar mi propiedad</Link>
-            </Button>
+            <Link
+              to="/vender"
+              className="inline-flex items-center justify-center rounded-md bg-secondary px-4 py-2 text-sm font-medium text-secondary-foreground ring-offset-background transition-colors hover:bg-secondary/80 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2"
+            >
+              Publicar mi propiedad
+            </Link>
           </div>
         </div>
         <div className="border-t border-primary-foreground/20 mt-12 pt-6 text-center text-xs text-primary-foreground/50 font-sans">
