@@ -53,9 +53,9 @@ const FeaturedProperties = () => {
     const fetchProperties = async () => {
       const { data } = await supabase
         .from("properties")
-        .select("*")
+        .select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at")
         .order("created_at", { ascending: false });
-      if (data) setDbProperties(data);
+      if (data) setDbProperties(data as Property[]);
     };
     fetchProperties();
   }, []);
