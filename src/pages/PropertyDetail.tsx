@@ -8,7 +8,7 @@ import { MapPin, Maximize, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Database } from "@/integrations/supabase/types";
 
-type Property = Database["public"]["Tables"]["properties"]["Row"];
+type Property = Omit<Database["public"]["Tables"]["properties"]["Row"], "user_id">;
 type PropertyImage = Database["public"]["Tables"]["property_images"]["Row"];
 
 const PropertyDetail = () => {
@@ -21,7 +21,7 @@ const PropertyDetail = () => {
     const fetchData = async () => {
       if (!id) return;
       const [propRes, imgRes] = await Promise.all([
-        supabase.from("properties").select("*").eq("id", id).single(),
+        supabase.from("properties").select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at").eq("id", id).single(),
         supabase.from("property_images").select("*").eq("property_id", id).order("position"),
       ]);
       setProperty(propRes.data);
