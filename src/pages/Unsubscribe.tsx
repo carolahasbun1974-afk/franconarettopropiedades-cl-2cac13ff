@@ -1,10 +1,7 @@
 import { useEffect, useState } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Button } from "@/components/ui/button";
-import { supabase } from "@/integrations/supabase/client";
-
-const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL as string;
-const SUPABASE_ANON = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY as string;
+import { backend, backendAnonKey, backendUrl } from "@/lib/backendClient";
 
 type State = "loading" | "valid" | "invalid" | "already" | "success" | "error";
 
@@ -22,8 +19,8 @@ const Unsubscribe = () => {
     (async () => {
       try {
         const res = await fetch(
-          `${SUPABASE_URL}/functions/v1/handle-email-unsubscribe?token=${encodeURIComponent(token)}`,
-          { headers: { apikey: SUPABASE_ANON } }
+          `${backendUrl}/functions/v1/handle-email-unsubscribe?token=${encodeURIComponent(token)}`,
+          { headers: { apikey: backendAnonKey } }
         );
         const data = await res.json();
         if (data.valid) setState("valid");
@@ -38,7 +35,7 @@ const Unsubscribe = () => {
   const confirm = async () => {
     if (!token) return;
     setSubmitting(true);
-    const { data, error } = await supabase.functions.invoke("handle-email-unsubscribe", {
+    const { data, error } = await backend.functions.invoke("handle-email-unsubscribe", {
       body: { token },
     });
     setSubmitting(false);

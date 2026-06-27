@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { backend } from "@/lib/backendClient";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -38,12 +38,12 @@ const Admin = () => {
 
   useEffect(() => {
     const checkAuth = async () => {
-      const { data: { session } } = await supabase.auth.getSession();
+      const { data: { session } } = await backend.auth.getSession();
       if (!session) { navigate("/auth"); return; }
       setUserId(session.user.id);
     };
     checkAuth();
-    const { data: { subscription } } = supabase.auth.onAuthStateChange((_event, session) => {
+    const { data: { subscription } } = backend.auth.onAuthStateChange((_event, session) => {
       if (!session) navigate("/auth");
       else setUserId(session.user.id);
     });
@@ -55,10 +55,10 @@ const Admin = () => {
   }, [userId]);
 
   const fetchProperties = async () => {
-    const { data: props } = await supabase.from("properties").select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at").order("created_at", { ascending: false });
+    const { data: props } = await backend.from("properties").select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at").order("created_at", { ascending: false });
     if (!props) return;
     setProperties(props);
-    const { data: imgs } = await supabase.from("property_images").select("*").order("position");
+    const { data: imgs } = await backend.from("property_images").select("*").order("position");
     const grouped: Record<string, PropertyImage[]> = {};
     (imgs || []).forEach((img) => {
       if (!grouped[img.property_id]) grouped[img.property_id] = [];
@@ -71,12 +71,12 @@ const Admin = () => {
     if (!userId) return null;
     const ext = file.name.split(".").pop();
     const path = `${userId}/${crypto.randomUUID()}.${ext}`;
-    const { error } = await supabase.storage.from("property-images").upload(path, file);
+    const { error } = await backend.storage.from("property-images").upload(path, file);
     if (error) {
       toast({ title: "Error al subir imagen", description: error.message, variant: "destructive" });
       return null;
     }
-    const { data } = supabase.storage.from("property-images").getPublicUrl(path);
+    const { data } = backend.storage.from("property-images").getPublicUrl(path);
     return data.publicUrl;
   };
 
@@ -100,9 +100,9 @@ const Admin = () => {
     let error;
 
     if (editing) {
-      ({ error } = await supabase.from("properties").update(payload).eq("id", editing.id));
+      ({ error } = await backend.from("properties").update(payload).eq("id", editing.id));
     } else {
-      const res = await supabase.from("properties").insert(payload).select("id").single();
+      const res = await backend.from("properties").insert(payload).select("id").single();
       error = res.error;
       propertyId = res.data?.id;
     }
@@ -115,7 +115,7 @@ const Admin = () => {
 
     // Delete removed images
     if (imagesToDelete.length > 0) {
-      await supabase.from("property_images").delete().in("id", imagesToDelete);
+      await backend.from("property_images").delete().in("id", imagesToDelete);
     }
 
     // Upload new images
@@ -124,7 +124,7 @@ const Admin = () => {
       for (let i = 0; i < imageFiles.length; i++) {
         const url = await uploadImage(imageFiles[i]);
         if (url) {
-          await supabase.from("property_images").insert({
+          await backend.from("property_images").insert({
             property_id: propertyId,
             image_url: url,
             position: startPos + i,
@@ -132,7 +132,7 @@ const Admin = () => {
         }
       }
       // Update main image_url to first image
-      const { data: firstImg } = await supabase
+      const { data: firstImg } = await backend
         .from("property_images")
         .select("image_url")
         .eq("property_id", propertyId)
@@ -140,7 +140,7 @@ const Admin = () => {
         .limit(1)
         .single();
       if (firstImg) {
-        await supabase.from("properties").update({ image_url: firstImg.image_url }).eq("id", propertyId);
+        await backend.from("properties").update({ image_url: firstImg.image_url }).eq("id", propertyId);
       }
     }
 
@@ -152,7 +152,7 @@ const Admin = () => {
 
   const handleDelete = async (id: string) => {
     if (!confirm("¿Eliminar esta propiedad?")) return;
-    const { error } = await supabase.from("properties").delete().eq("id", id);
+    const { error } = await backend.from("properties").delete().eq("id", id);
     if (error) toast({ title: "Error", description: error.message, variant: "destructive" });
     else fetchProperties();
   };
@@ -183,7 +183,7 @@ const Admin = () => {
   };
 
   const handleLogout = async () => {
-    await supabase.auth.signOut();
+    await backend.auth.signOut();
     navigate("/");
   };
 

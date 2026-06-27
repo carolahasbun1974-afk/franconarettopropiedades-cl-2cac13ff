@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, Link } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { backend } from "@/lib/backendClient";
 import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import PropertyImageGallery from "@/components/PropertyImageGallery";
@@ -21,8 +21,8 @@ const PropertyDetail = () => {
     const fetchData = async () => {
       if (!id) return;
       const [propRes, imgRes] = await Promise.all([
-        supabase.from("properties").select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at").eq("id", id).single(),
-        supabase.from("property_images").select("*").eq("property_id", id).order("position"),
+        backend.from("properties").select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at").eq("id", id).single(),
+        backend.from("property_images").select("*").eq("property_id", id).order("position"),
       ]);
       setProperty(propRes.data);
       setImages(imgRes.data || []);

@@ -1,47 +1,16 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { backend } from "@/lib/backendClient";
 import PropertyCard from "./PropertyCard";
 import vineyardImg from "@/assets/property-vineyard.jpg";
-import wheatImg from "@/assets/property-wheat.jpg";
-import orchardImg from "@/assets/property-orchard.jpg";
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
 import type { Database } from "@/integrations/supabase/types";
 
-type Property = Database["public"]["Tables"]["properties"]["Row"];
-
-const fallbackProperties = [
-  {
-    id: "fallback-1",
-    image: vineyardImg,
-    title: "Viñedo Premium Valle Central",
-    location: "Valle del Maule",
-    hectares: 120,
-    property_type: "Fundos y parcelas agrícolas",
-    price: "UF 85.000",
-  },
-  {
-    id: "fallback-2",
-    image: wheatImg,
-    title: "Campo de Cereales Los Andes",
-    location: "Región del Biobío",
-    hectares: 350,
-    property_type: "Fundos y parcelas agrícolas",
-    price: "UF 45.000",
-  },
-  {
-    id: "fallback-3",
-    image: orchardImg,
-    title: "Frutales del Sur",
-    location: "Región de la Araucanía",
-    hectares: 80,
-    property_type: "Fundos y parcelas agrícolas",
-    price: "UF 62.000",
-  },
-];
+type Property = Omit<Database["public"]["Tables"]["properties"]["Row"], "user_id">;
 
 const FeaturedProperties = () => {
-  const [dbProperties, setDbProperties] = useState<Property[]>([]);
+  const [dbProperties, setDbProperties] = useState<Property[] | null>(null);
+  const [loadError, setLoadError] = useState(false);
   const location = useLocation();
 
   const activeCategory = useMemo(() => {
@@ -51,24 +20,27 @@ const FeaturedProperties = () => {
 
   useEffect(() => {
     const fetchProperties = async () => {
-      const { data } = await supabase
+      const { data, error } = await backend
         .from("properties")
         .select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at")
         .order("created_at", { ascending: false });
-      if (data) setDbProperties(data as Property[]);
+      if (error) {
+        console.error("Error loading properties", error);
+        setLoadError(true);
+        setDbProperties([]);
+        return;
+      }
+      setDbProperties((data ?? []) as Property[]);
     };
     fetchProperties();
   }, []);
 
-  const hasDbProperties = dbProperties.length > 0;
+  const properties = dbProperties ?? [];
+  const isLoading = dbProperties === null;
 
   const filteredDb = activeCategory
-    ? dbProperties.filter((p) => p.property_type === activeCategory)
-    : dbProperties.slice(0, 6);
-
-  const filteredFallback = activeCategory
-    ? fallbackProperties.filter((p) => p.property_type === activeCategory)
-    : fallbackProperties;
+    ? properties.filter((p) => p.property_type === activeCategory)
+    : properties.slice(0, 6);
 
   const setCategory = (cat: string | null) => {
     const url = cat ? `/?cat=${encodeURIComponent(cat)}#propiedades` : "/#propiedades";
@@ -118,38 +90,42 @@ const FeaturedProperties = () => {
           ))}
         </div>
 
-        {hasDbProperties && filteredDb.length === 0 && (
+        {isLoading && (
           <p className="text-center text-muted-foreground py-12">
-            No hay propiedades en esta categoría todavía.
+            Cargando propiedades...
           </p>
         )}
 
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {hasDbProperties
-            ? filteredDb.map((prop) => (
-                <Link key={prop.id} to={`/propiedad/${prop.id}`}>
-                  <PropertyCard
-                    image={prop.image_url || vineyardImg}
-                    title={prop.title}
-                    location={prop.location}
-                    hectares={prop.hectares}
-                    type={prop.property_type}
-                    price={prop.price}
-                  />
-                </Link>
-              ))
-            : filteredFallback.map((prop) => (
+        {!isLoading && loadError && (
+          <p className="text-center text-muted-foreground py-12">
+            No pudimos cargar las propiedades en este momento.
+          </p>
+        )}
+
+        {!isLoading && !loadError && filteredDb.length === 0 && (
+          <p className="text-center text-muted-foreground py-12">
+            {activeCategory
+              ? "No hay propiedades en esta categoría todavía."
+              : "No hay propiedades disponibles por el momento."}
+          </p>
+        )}
+
+        {filteredDb.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {filteredDb.map((prop) => (
+              <Link key={prop.id} to={`/propiedad/${prop.id}`}>
                 <PropertyCard
-                  key={prop.id}
-                  image={prop.image}
+                  image={prop.image_url || vineyardImg}
                   title={prop.title}
                   location={prop.location}
                   hectares={prop.hectares}
                   type={prop.property_type}
                   price={prop.price}
                 />
-              ))}
-        </div>
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </section>
   );
