@@ -4,10 +4,7 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, User, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-
-// 👇 REEMPLAZA esto por tu Access Key de https://web3forms.com
-// (Es seguro tenerla en el código del frontend — Web3Forms está diseñado así.)
-const WEB3FORMS_ACCESS_KEY = "TU_ACCESS_KEY_AQUI";
+import { supabase } from "@/integrations/supabase/client";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -22,30 +19,14 @@ const ContactForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const response = await fetch("https://api.web3forms.com/submit", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-          Accept: "application/json",
-        },
-        body: JSON.stringify({
-          access_key: WEB3FORMS_ACCESS_KEY,
-          subject: `Nuevo contacto desde la web — ${form.name}`,
-          from_name: "Franco Naretto Propiedades",
-          name: form.name,
-          email: form.email,
-          phone: form.phone,
-          message: form.message,
-          // Web3Forms enviará el correo a la casilla con la que creaste la Access Key
-          // (contacto@franconarettopropiedades.cl)
-        }),
+      const { error } = await supabase.from("contacts").insert({
+        name: form.name.trim(),
+        email: form.email.trim(),
+        phone: form.phone.trim() || null,
+        message: form.message.trim(),
       });
 
-      const data = await response.json();
-
-      if (!response.ok || !data.success) {
-        throw new Error(data.message || "Error al enviar el formulario");
-      }
+      if (error) throw error;
 
       toast({
         title: "Mensaje enviado",
