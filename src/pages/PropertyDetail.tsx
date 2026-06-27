@@ -8,7 +8,7 @@ import { MapPin, Maximize, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { Database } from "@/integrations/supabase/types";
 
-type Property = Database["public"]["Tables"]["properties"]["Row"];
+type Property = Omit<Database["public"]["Tables"]["properties"]["Row"], "user_id">;
 type PropertyImage = Database["public"]["Tables"]["property_images"]["Row"];
 
 const PropertyDetail = () => {
