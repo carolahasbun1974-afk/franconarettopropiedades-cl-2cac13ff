@@ -1,7 +1,17 @@
+import { useLocation } from "react-router-dom";
 import heroImage from "@/assets/hero-farm.jpg";
 import { Button } from "@/components/ui/button";
 
 const Hero = () => {
+  const location = useLocation();
+  const hideHero =
+    location.hash === "#propiedades" ||
+    new URLSearchParams(location.search).get("cat") !== null;
+
+  if (hideHero) {
+    return null;
+  }
+
   return (
     <section id="inicio" className="relative mt-52 min-h-[calc(100vh-13rem)] flex items-center justify-center pt-12 pb-16">
       <img

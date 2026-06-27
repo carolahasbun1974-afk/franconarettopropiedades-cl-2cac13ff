@@ -76,7 +76,10 @@ const FeaturedProperties = () => {
   };
 
   return (
-    <section id="propiedades" className="py-20 bg-background scroll-mt-40">
+    <section
+      id="propiedades"
+      className={`py-20 bg-background scroll-mt-56 ${activeCategory ? "mt-52" : ""}`}
+    >
       <div className="container mx-auto px-4">
         <div className="text-center mb-10">
           <h2 className="text-3xl md:text-4xl font-bold text-foreground mb-4">
