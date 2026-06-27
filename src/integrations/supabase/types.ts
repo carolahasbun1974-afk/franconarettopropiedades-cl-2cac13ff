@@ -200,6 +200,13 @@ export type Database = {
             referencedRelation: "properties"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "property_images_property_id_fkey"
+            columns: ["property_id"]
+            isOneToOne: false
+            referencedRelation: "properties_public"
+            referencedColumns: ["id"]
+          },
         ]
       }
       suppressed_emails: {
@@ -228,7 +235,45 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      properties_public: {
+        Row: {
+          created_at: string | null
+          description: string | null
+          hectares: number | null
+          id: string | null
+          image_url: string | null
+          location: string | null
+          price: string | null
+          property_type: string | null
+          title: string | null
+          updated_at: string | null
+        }
+        Insert: {
+          created_at?: string | null
+          description?: string | null
+          hectares?: number | null
+          id?: string | null
+          image_url?: string | null
+          location?: string | null
+          price?: string | null
+          property_type?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Update: {
+          created_at?: string | null
+          description?: string | null
+          hectares?: number | null
+          id?: string | null
+          image_url?: string | null
+          location?: string | null
+          price?: string | null
+          property_type?: string | null
+          title?: string | null
+          updated_at?: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       delete_email: {
