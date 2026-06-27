@@ -21,7 +21,7 @@ const PropertyDetail = () => {
     const fetchData = async () => {
       if (!id) return;
       const [propRes, imgRes] = await Promise.all([
-        supabase.from("properties").select("*").eq("id", id).single(),
+        supabase.from("properties").select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at").eq("id", id).single(),
         supabase.from("property_images").select("*").eq("property_id", id).order("position"),
       ]);
       setProperty(propRes.data);
