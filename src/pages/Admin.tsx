@@ -11,7 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
 import type { Database } from "@/integrations/supabase/types";
 
-type Property = Database["public"]["Tables"]["properties"]["Row"];
+type Property = Omit<Database["public"]["Tables"]["properties"]["Row"], "user_id">;
 type PropertyImage = Database["public"]["Tables"]["property_images"]["Row"];
 
 const Admin = () => {
