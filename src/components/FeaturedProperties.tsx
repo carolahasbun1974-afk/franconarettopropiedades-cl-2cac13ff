@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 import { Link, useLocation } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { backend } from "@/lib/backendClient";
 import PropertyCard from "./PropertyCard";
 import vineyardImg from "@/assets/property-vineyard.jpg";
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
@@ -20,7 +20,7 @@ const FeaturedProperties = () => {
 
   useEffect(() => {
     const fetchProperties = async () => {
-      const { data, error } = await supabase
+      const { data, error } = await backend
         .from("properties")
         .select("id, title, description, price, location, property_type, hectares, image_url, created_at, updated_at")
         .order("created_at", { ascending: false });
