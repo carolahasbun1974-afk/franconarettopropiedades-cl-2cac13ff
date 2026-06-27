@@ -4,7 +4,8 @@ import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { Mail, Phone, User, Send } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
-import { supabase } from "@/integrations/supabase/client";
+
+const WEB3FORMS_ACCESS_KEY = "TU_ACCESS_KEY_AQUI";
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -19,14 +20,28 @@ const ContactForm = () => {
     e.preventDefault();
     setLoading(true);
     try {
-      const { error } = await supabase.from("contacts").insert({
-        name: form.name.trim(),
-        email: form.email.trim(),
-        phone: form.phone.trim() || null,
-        message: form.message.trim(),
+      const response = await fetch("https://api.web3forms.com/submit", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Accept: "application/json",
+        },
+        body: JSON.stringify({
+          access_key: WEB3FORMS_ACCESS_KEY,
+          subject: `Nuevo contacto desde franconarettopropiedades.cl — ${form.name}`,
+          from_name: "Franco Naretto Propiedades",
+          name: form.name.trim(),
+          email: form.email.trim(),
+          phone: form.phone.trim(),
+          message: form.message.trim(),
+        }),
       });
 
-      if (error) throw error;
+      const result = await response.json();
+
+      if (!response.ok || !result.success) {
+        throw new Error(result.message || "No se pudo enviar el mensaje");
+      }
 
       toast({
         title: "Mensaje enviado",
