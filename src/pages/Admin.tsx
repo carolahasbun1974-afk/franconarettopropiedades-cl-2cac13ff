@@ -330,6 +330,8 @@ const Admin = () => {
             );
           })}
         </div>
+
+        {userId && <PaymentsManager userId={userId} />}
       </main>
     </div>
   );
