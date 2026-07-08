@@ -10,6 +10,7 @@ import { Pencil, Trash2, Plus, LogOut, X } from "lucide-react";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { PROPERTY_CATEGORIES } from "@/lib/propertyCategories";
 import type { Database } from "@/integrations/supabase/types";
+import PaymentsManager from "@/components/PaymentsManager";
 
 type Property = Omit<Database["public"]["Tables"]["properties"]["Row"], "user_id">;
 type PropertyImage = Database["public"]["Tables"]["property_images"]["Row"];
