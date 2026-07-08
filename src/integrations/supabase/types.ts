@@ -128,6 +128,51 @@ export type Database = {
         }
         Relationships: []
       }
+      payments: {
+        Row: {
+          amount: number
+          client_name: string
+          concept: string | null
+          created_at: string
+          currency: string
+          id: string
+          notes: string | null
+          paid_at: string
+          period_end: string
+          period_start: string
+          updated_at: string
+          user_id: string
+        }
+        Insert: {
+          amount: number
+          client_name: string
+          concept?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          notes?: string | null
+          paid_at?: string
+          period_end: string
+          period_start: string
+          updated_at?: string
+          user_id: string
+        }
+        Update: {
+          amount?: number
+          client_name?: string
+          concept?: string | null
+          created_at?: string
+          currency?: string
+          id?: string
+          notes?: string | null
+          paid_at?: string
+          period_end?: string
+          period_start?: string
+          updated_at?: string
+          user_id?: string
+        }
+        Relationships: []
+      }
       properties: {
         Row: {
           created_at: string
