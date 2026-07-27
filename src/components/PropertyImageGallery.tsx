@@ -16,50 +16,100 @@ const PropertyImageGallery = ({ images, fallbackUrl }: PropertyImageGalleryProps
       ? [{ id: "fallback", image_url: fallbackUrl, position: 0 }]
       : [];
 
-  const [lightbox, setLightbox] = useState<number | null>(null);
+  const [current, setCurrent] = useState(0);
+  const [lightbox, setLightbox] = useState(false);
 
   if (list.length === 0) return null;
 
-  const close = () => setLightbox(null);
-  const prev = () => setLightbox((i) => (i === null ? i : (i === 0 ? list.length - 1 : i - 1)));
-  const next = () => setLightbox((i) => (i === null ? i : (i === list.length - 1 ? 0 : i + 1)));
+  const prev = () => setCurrent((p) => (p === 0 ? list.length - 1 : p - 1));
+  const next = () => setCurrent((p) => (p === list.length - 1 ? 0 : p + 1));
 
   return (
-    <div className="mb-8">
-      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-        {list.map((img, i) => (
-          <button
-            key={img.id}
-            type="button"
-            onClick={() => setLightbox(i)}
-            className="group relative aspect-square overflow-hidden rounded-lg bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
-            aria-label={`Ver foto ${i + 1}`}
-          >
-            <img
-              src={img.image_url}
-              alt={`Foto ${i + 1}`}
-              loading="lazy"
-              className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
-            />
-          </button>
-        ))}
+    <div className="mb-8 space-y-3">
+      <div className="relative rounded-lg bg-muted overflow-hidden aspect-[4/3] md:aspect-[16/10]">
+        <button
+          type="button"
+          onClick={() => setLightbox(true)}
+          className="absolute inset-0 w-full h-full focus:outline-none"
+          aria-label="Ampliar foto"
+        >
+          <img
+            src={list[current].image_url}
+            alt={`Foto ${current + 1}`}
+            className="absolute inset-0 w-full h-full object-cover"
+          />
+        </button>
+        {list.length > 1 && (
+          <>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/70 hover:bg-background/90 rounded-full"
+              onClick={prev}
+            >
+              <ChevronLeft size={20} />
+            </Button>
+            <Button
+              variant="ghost"
+              size="icon"
+              className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/70 hover:bg-background/90 rounded-full"
+              onClick={next}
+            >
+              <ChevronRight size={20} />
+            </Button>
+            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
+              {list.map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => setCurrent(i)}
+                  className={cn(
+                    "w-2 h-2 rounded-full transition-colors",
+                    i === current ? "bg-primary" : "bg-background/60"
+                  )}
+                  aria-label={`Ir a foto ${i + 1}`}
+                />
+              ))}
+            </div>
+          </>
+        )}
       </div>
 
-      {lightbox !== null && (
+      {list.length > 1 && (
+        <div className="flex gap-2 overflow-x-auto pb-1">
+          {list.map((img, i) => (
+            <button
+              key={img.id}
+              onClick={() => setCurrent(i)}
+              className={cn(
+                "shrink-0 w-20 h-20 rounded border-2 transition-colors overflow-hidden",
+                i === current ? "border-primary" : "border-transparent"
+              )}
+            >
+              <img
+                src={img.image_url}
+                alt={`Miniatura ${i + 1}`}
+                className="w-full h-full object-cover"
+              />
+            </button>
+          ))}
+        </div>
+      )}
+
+      {lightbox && (
         <div
           className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
-          onClick={close}
+          onClick={() => setLightbox(false)}
         >
           <button
-            onClick={(e) => { e.stopPropagation(); close(); }}
+            onClick={(e) => { e.stopPropagation(); setLightbox(false); }}
             className="absolute top-4 right-4 text-white/90 hover:text-white p-2"
             aria-label="Cerrar"
           >
             <X size={28} />
           </button>
           <img
-            src={list[lightbox].image_url}
-            alt={`Foto ${lightbox + 1}`}
+            src={list[current].image_url}
+            alt={`Foto ${current + 1}`}
             className="max-w-full max-h-full object-contain"
             onClick={(e) => e.stopPropagation()}
           />
@@ -81,8 +131,8 @@ const PropertyImageGallery = ({ images, fallbackUrl }: PropertyImageGalleryProps
               >
                 <ChevronRight size={24} />
               </Button>
-              <div className={cn("absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm")}>
-                {lightbox + 1} / {list.length}
+              <div className="absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm">
+                {current + 1} / {list.length}
               </div>
             </>
           )}
