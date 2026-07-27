@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronLeft, ChevronRight, X } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -9,83 +9,83 @@ interface PropertyImageGalleryProps {
 }
 
 const PropertyImageGallery = ({ images, fallbackUrl }: PropertyImageGalleryProps) => {
-  const [current, setCurrent] = useState(0);
-
   const sorted = [...images].sort((a, b) => a.position - b.position);
+  const list = sorted.length > 0
+    ? sorted
+    : fallbackUrl
+      ? [{ id: "fallback", image_url: fallbackUrl, position: 0 }]
+      : [];
 
-  if (sorted.length === 0 && !fallbackUrl) return null;
+  const [lightbox, setLightbox] = useState<number | null>(null);
 
-  if (sorted.length === 0 && fallbackUrl) {
-    return (
-      <div className="mb-8 rounded-lg bg-muted p-2 md:p-3">
-        <img
-          src={fallbackUrl}
-          alt="Propiedad"
-          className="block w-full h-auto rounded-md"
-        />
-      </div>
-    );
-  }
+  if (list.length === 0) return null;
+
+  const close = () => setLightbox(null);
+  const prev = () => setLightbox((i) => (i === null ? i : (i === 0 ? list.length - 1 : i - 1)));
+  const next = () => setLightbox((i) => (i === null ? i : (i === list.length - 1 ? 0 : i + 1)));
 
   return (
-    <div className="mb-8 space-y-3">
-      <div className="relative rounded-lg bg-muted p-2 md:p-3">
-        <img
-          src={sorted[current].image_url}
-          alt={`Foto ${current + 1}`}
-          className="block w-full h-auto rounded-md"
-        />
-        {sorted.length > 1 && (
-          <>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute left-2 top-1/2 -translate-y-1/2 bg-background/70 hover:bg-background/90 rounded-full"
-              onClick={() => setCurrent((p) => (p === 0 ? sorted.length - 1 : p - 1))}
-            >
-              <ChevronLeft size={20} />
-            </Button>
-            <Button
-              variant="ghost"
-              size="icon"
-              className="absolute right-2 top-1/2 -translate-y-1/2 bg-background/70 hover:bg-background/90 rounded-full"
-              onClick={() => setCurrent((p) => (p === sorted.length - 1 ? 0 : p + 1))}
-            >
-              <ChevronRight size={20} />
-            </Button>
-            <div className="absolute bottom-3 left-1/2 -translate-x-1/2 flex gap-1.5">
-              {sorted.map((_, i) => (
-                <button
-                  key={i}
-                  onClick={() => setCurrent(i)}
-                  className={cn(
-                    "w-2 h-2 rounded-full transition-colors",
-                    i === current ? "bg-primary" : "bg-background/60"
-                  )}
-                />
-              ))}
-            </div>
-          </>
-        )}
+    <div className="mb-8">
+      <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+        {list.map((img, i) => (
+          <button
+            key={img.id}
+            type="button"
+            onClick={() => setLightbox(i)}
+            className="group relative aspect-square overflow-hidden rounded-lg bg-muted focus:outline-none focus:ring-2 focus:ring-primary"
+            aria-label={`Ver foto ${i + 1}`}
+          >
+            <img
+              src={img.image_url}
+              alt={`Foto ${i + 1}`}
+              loading="lazy"
+              className="absolute inset-0 w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+            />
+          </button>
+        ))}
       </div>
-      {sorted.length > 1 && (
-        <div className="flex gap-2 overflow-x-auto pb-1">
-          {sorted.map((img, i) => (
-            <button
-              key={img.id}
-              onClick={() => setCurrent(i)}
-              className={cn(
-                "shrink-0 w-20 h-14 rounded border-2 transition-colors bg-muted p-1 flex items-center justify-center",
-                i === current ? "border-primary" : "border-transparent"
-              )}
-            >
-              <img
-                src={img.image_url}
-                alt={`Miniatura ${i + 1}`}
-                className="max-w-full max-h-full w-auto h-auto object-contain"
-              />
-            </button>
-          ))}
+
+      {lightbox !== null && (
+        <div
+          className="fixed inset-0 z-50 bg-black/90 flex items-center justify-center p-4"
+          onClick={close}
+        >
+          <button
+            onClick={(e) => { e.stopPropagation(); close(); }}
+            className="absolute top-4 right-4 text-white/90 hover:text-white p-2"
+            aria-label="Cerrar"
+          >
+            <X size={28} />
+          </button>
+          <img
+            src={list[lightbox].image_url}
+            alt={`Foto ${lightbox + 1}`}
+            className="max-w-full max-h-full object-contain"
+            onClick={(e) => e.stopPropagation()}
+          />
+          {list.length > 1 && (
+            <>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute left-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full"
+                onClick={(e) => { e.stopPropagation(); prev(); }}
+              >
+                <ChevronLeft size={24} />
+              </Button>
+              <Button
+                variant="ghost"
+                size="icon"
+                className="absolute right-4 top-1/2 -translate-y-1/2 bg-white/10 hover:bg-white/20 text-white rounded-full"
+                onClick={(e) => { e.stopPropagation(); next(); }}
+              >
+                <ChevronRight size={24} />
+              </Button>
+              <div className={cn("absolute bottom-4 left-1/2 -translate-x-1/2 text-white/80 text-sm")}>
+                {lightbox + 1} / {list.length}
+              </div>
+            </>
+          )}
         </div>
       )}
     </div>
