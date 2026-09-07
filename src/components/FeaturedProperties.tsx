@@ -40,7 +40,7 @@ const FeaturedProperties = () => {
 
   const filteredDb = activeCategory
     ? properties.filter((p) => p.property_type === activeCategory)
-    : properties.slice(0, 6);
+    : properties;
 
   const setCategory = (cat: string | null) => {
     const url = cat ? `/?cat=${encodeURIComponent(cat)}#propiedades` : "/#propiedades";
