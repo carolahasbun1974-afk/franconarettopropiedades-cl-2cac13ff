@@ -172,6 +172,7 @@ const Admin = () => {
     setImagesToDelete([]);
     setShowForm(true);
     setImageFiles([]);
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   const resetForm = () => {
